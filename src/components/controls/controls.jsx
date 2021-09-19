@@ -1,7 +1,7 @@
-import React, {useRef} from "react";
+import React, {memo, useRef} from "react";
 import PropTypes from "prop-types";
 
-const Controls = ({handleSubmit, isListVisible, setIsListVisible, handleDeleteAll}) => {
+const Controls = ({handleSubmit, handleDeleteAll, handlePopupToggleClick}) => {
 
   const messageRef = useRef();
 
@@ -27,7 +27,9 @@ const Controls = ({handleSubmit, isListVisible, setIsListVisible, handleDeleteAl
       <button
         className="controls__item btn btn-show-popup"
         type="button"
-        onClick={() => setIsListVisible(!isListVisible)}
+        onClick={() => {
+          handlePopupToggleClick();
+        }}
       >Скрыть/показать попап нотификаций</button>
     </div>
   );
@@ -36,8 +38,7 @@ const Controls = ({handleSubmit, isListVisible, setIsListVisible, handleDeleteAl
 Controls.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
   handleDeleteAll: PropTypes.func.isRequired,
-  isListVisible: PropTypes.bool.isRequired,
-  setIsListVisible: PropTypes.func.isRequired,
+  handlePopupToggleClick: PropTypes.func.isRequired,
 };
 
-export default Controls;
+export default memo(Controls);

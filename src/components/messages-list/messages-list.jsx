@@ -1,9 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-const MessagesList = ({messages, visibleMessagesNum}) => {
+const MessagesList = ({messages, visibleMessagesNum, isFullListShown, setIsFullListShown}) => {
+
   const getVisibleMessages = () => (
-    messages.length < visibleMessagesNum
+    isFullListShown
       ? messages
       : messages.slice(0, visibleMessagesNum)
   );
@@ -23,14 +24,22 @@ const MessagesList = ({messages, visibleMessagesNum}) => {
           )
         }
       </ul>
-      { (messages.length > visibleMessagesNum) && <span className="msg-list__link">Посмотреть все...</span> }
+      {
+        (messages.length > visibleMessagesNum && !isFullListShown) &&
+        <span
+          className="msg-list__link"
+          onClick={() => setIsFullListShown(true)}
+        >Посмотреть все...</span>
+      }
     </div>
   );
 };
 
 MessagesList.propTypes = {
   messages: PropTypes.array.isRequired,
-  visibleMessagesNum: PropTypes.number.isRequired
+  visibleMessagesNum: PropTypes.number.isRequired,
+  isFullListShown: PropTypes.bool.isRequired,
+  setIsFullListShown: PropTypes.func.isRequired
 };
 
 export default MessagesList;

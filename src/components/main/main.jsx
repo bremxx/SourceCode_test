@@ -1,4 +1,4 @@
-import React, {useEffect, useMemo, useState} from "react";
+import React, {useCallback, useEffect, useMemo, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {deleteAllMessages, postNewMessage, sendMockMessage} from "../../store/action";
 import {makeGetMessagesSelector} from "../../store/selectors";
@@ -15,16 +15,27 @@ const Main = () => {
   const dispatch = useDispatch();
 
   const [isListVisible, setIsListVisible] = useState(false);
+  const [isFullListShown, setIsFullListShown] = useState(false);
 
-  const handleSubmit = (newMessage) => dispatch(postNewMessage(newMessage));
+  const handleSubmit = useCallback(
+      (newMessage) => dispatch(postNewMessage(newMessage)),
+      []
+  );
 
-  const handleDeleteAll = () => dispatch(deleteAllMessages());
+  const handleDeleteAll = useCallback(
+      () => dispatch(deleteAllMessages()),
+      []
+  );
+
+  const handlePopupToggleClick = useCallback(
+      () => {
+        setIsListVisible(!isListVisible);
+        setIsFullListShown(false);
+      }, [isListVisible, isFullListShown]
+  );
 
   useEffect(() => {
-    // const id = setInterval(() => dispatch(postNewMessage(`New Message ${messages.length + 1}`)), 2000);
     // dispatch(sendMockMessage());
-
-    // return () => clearTimeout(sendMockMessage());
   }, [messages]);
 
   return (
@@ -33,7 +44,7 @@ const Main = () => {
         <div className="board__header header">
           <div
             className="header__icon"
-            onClick={() => setIsListVisible(!isListVisible)}>
+            onClick={() => handlePopupToggleClick()}>
             { (messages.length > 0) && <div className="header__icon-indicator">{messages.length}</div> }
           </div>
         </div>
@@ -41,11 +52,19 @@ const Main = () => {
         <div className="board__main">
           <Controls
             handleSubmit={handleSubmit}
-            isListVisible={isListVisible}
-            setIsListVisible={setIsListVisible}
-            handleDeleteAll={handleDeleteAll} />
+            handleDeleteAll={handleDeleteAll}
+            handlePopupToggleClick={handlePopupToggleClick}
+          />
 
-          { (isListVisible && <MessagesList messages={messages} visibleMessagesNum={visibleMessagesNum} />) }
+          {
+            isListVisible &&
+            <MessagesList
+              messages={messages}
+              visibleMessagesNum={visibleMessagesNum}
+              isFullListShown={isFullListShown}
+              setIsFullListShown={setIsFullListShown}
+            />
+          }
         </div>
       </div>
     </div>
