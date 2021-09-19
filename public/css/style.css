@@ -29,19 +29,34 @@
 .header {
   display: flex;
   align-items: center;
-  height: 35px;
   padding: 10px;
   margin-bottom: 10px;
   background-color: var(--el-bgColor);
 }
 
 .header__icon {
-  width: 24px;
-  height: 24px;
+  position: relative;
+  width: 40px;
+  height: 40px;
   margin-left: auto;
   background-image: url("../img/free-icon-mail-inbox-app-3884252.svg");
   background-repeat: no-repeat;
   background-position: center;
+  cursor: pointer;
+}
+
+.header__icon-indicator {
+  position: absolute;
+  width: 25px;
+  height: 25px;
+  top: -5px;
+  right: -5px;
+  background-color: red;
+  color: #fff;
+  font-weight: bold;
+  font-size: 1.3em;
+  text-align: center;
+  border-radius: 50%;
 }
 
 .board__main {
@@ -67,9 +82,11 @@
   width: 40%;
 }
 
-.msg-list {
-  position: relative;
+.board__list {
   margin: 0;
+}
+
+.msg-list {
   padding: 10px;
   list-style: none;
   display: flex;

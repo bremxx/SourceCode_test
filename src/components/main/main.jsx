@@ -1,7 +1,9 @@
-import React, {useMemo, useRef} from "react";
+import React, {useEffect, useMemo, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {postNewMessage} from "../../store/action";
+import {deleteAllMessages, postNewMessage, sendMockMessage} from "../../store/action";
 import {makeGetMessagesSelector} from "../../store/selectors";
+import Controls from "../controls/controls";
+import MessagesList from "../messages-list/messages-list";
 
 const Main = () => {
 
@@ -9,49 +11,39 @@ const Main = () => {
   const messages = useSelector((state) => getMessages(state));
 
   const dispatch = useDispatch();
-  const messageRef = useRef();
 
-  const handleSubmit = (newMessage) => {
-    dispatch(postNewMessage(newMessage));
-  };
+  const [isListVisible, setIsListVisible] = useState(false);
+
+  const handleSubmit = (newMessage) => dispatch(postNewMessage(newMessage));
+
+  const handleDeleteAll = () => dispatch(deleteAllMessages());
+
+  useEffect(() => {
+    // const id = setInterval(() => dispatch(postNewMessage(`New Message ${messages.length + 1}`)), 2000);
+    dispatch(sendMockMessage());
+
+    // return () => clearTimeout(sendMockMessage());
+  }, [messages]);
 
   return (
     <div className="main-container">
       <div className="board">
         <div className="board__header header">
-          <div className="header__icon"></div>
+          <div
+            className="header__icon"
+            onClick={() => setIsListVisible(!isListVisible)}>
+            { (messages.length > 0) && <div className="header__icon-indicator">{messages.length}</div> }
+          </div>
         </div>
 
         <div className="board__main">
-          <div className="board__controls controls">
-            <form
-              className="controls__item"
-              onSubmit={(evt) => {
-                evt.preventDefault();
-                handleSubmit(messageRef.current.value);
-              }}>
-              <input className="input" ref={messageRef} type="text" placeholder="Ведите название события"></input>
-              <button className="btn btn-submit" type="submit">Отправить</button>
-            </form>
-            <button className="controls__item btn btn-read-all" type="button">Пометить все события прочитанными</button>
-            <button className="controls__item btn btn-delete-all" type="button">Удалить все события</button>
-            <button className="controls__item btn btn-show-popup" type="button">Скрыть/показать попап нотификаций</button>
-          </div>
+          <Controls
+            handleSubmit={handleSubmit}
+            isListVisible={isListVisible}
+            setIsListVisible={setIsListVisible}
+            handleDeleteAll={handleDeleteAll} />
 
-          <div className="board__list-container ">
-            <ul className="msg-list">
-              {
-                messages.map(
-                    (item, i) =>
-                      <li className="msg-list__item msg" key={`msg-${i}`}>
-                        <span className="msg__title">{item}</span>
-                        <span className="msg__time">sdgdgdf</span>
-                      </li>
-                )
-              }
-            </ul>
-          </div>
-
+          { (isListVisible && <MessagesList messages={messages} />) }
         </div>
       </div>
     </div>
