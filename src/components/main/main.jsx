@@ -1,6 +1,6 @@
 import React, {useCallback, useEffect, useMemo, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {deleteAllMessages, postNewMessage, sendMockMessage} from "../../store/action";
+import {deleteAllMessages, postNewMessage} from "../../store/action";
 import {makeGetMessagesSelector} from "../../store/selectors";
 import Controls from "../controls/controls";
 import MessagesList from "../messages-list/messages-list";
@@ -16,6 +16,7 @@ const Main = () => {
 
   const [isListVisible, setIsListVisible] = useState(false);
   const [isFullListShown, setIsFullListShown] = useState(false);
+  const [timerId, setTimerId] = useState(null);
 
   const handleSubmit = useCallback(
       (newMessage) => dispatch(postNewMessage(newMessage)),
@@ -23,8 +24,13 @@ const Main = () => {
   );
 
   const handleDeleteAll = useCallback(
-      () => dispatch(deleteAllMessages()),
-      []
+      () => {
+        dispatch(deleteAllMessages());
+        clearTimeout(timerId);
+        setTimerId(null);
+        setIsListVisible(!isListVisible);
+        setIsFullListShown(false);
+      }, [timerId]
   );
 
   const handlePopupToggleClick = useCallback(
@@ -35,7 +41,7 @@ const Main = () => {
   );
 
   useEffect(() => {
-    // dispatch(sendMockMessage());
+    setTimerId(() => setTimeout(() => dispatch(postNewMessage(`New Message ${messages.length + 1}`)), 2000));
   }, [messages]);
 
   return (
