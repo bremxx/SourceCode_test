@@ -5,6 +5,17 @@ import {makeGetMessagesSelector} from "../../store/selectors";
 import Controls from "../controls/controls";
 import MessagesList from "../messages-list/messages-list";
 
+const debounce = (cb) => {
+  let lastTimeout = null;
+
+  return (...parameters) => {
+    if (lastTimeout) {
+      clearTimeout(lastTimeout);
+    }
+    lastTimeout = setTimeout(() => cb(...parameters), 500);
+  };
+};
+
 const Main = () => {
 
   const getMessages = useMemo(makeGetMessagesSelector, []);
@@ -28,10 +39,13 @@ const Main = () => {
         dispatch(deleteAllMessages());
         clearTimeout(timerId);
         setTimerId(null);
-        setIsListVisible(!isListVisible);
-        setIsFullListShown(false);
+        if (isListVisible) {
+          setIsListVisible(!isListVisible);
+          setIsFullListShown(false);
+        }
       }, [timerId]
   );
+  const debouncedHandleDeleteAll = debounce(() => handleDeleteAll());
 
   const handlePopupToggleClick = useCallback(
       () => {
@@ -41,7 +55,7 @@ const Main = () => {
   );
 
   useEffect(() => {
-    setTimerId(() => setTimeout(() => dispatch(postNewMessage(`New Message ${messages.length + 1}`)), 2000));
+    // setTimerId(() => setTimeout(() => dispatch(postNewMessage(`New Message ${messages.length + 1}`)), 2000));
   }, [messages]);
 
   return (
@@ -58,7 +72,7 @@ const Main = () => {
         <div className="board__main">
           <Controls
             handleSubmit={handleSubmit}
-            handleDeleteAll={handleDeleteAll}
+            handleDeleteAll={debouncedHandleDeleteAll}
             handlePopupToggleClick={handlePopupToggleClick}
           />
 
