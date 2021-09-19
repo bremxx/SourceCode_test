@@ -80,20 +80,18 @@
 
 .board__list-container {
   width: 40%;
+  padding: 10px 10px 10px 40px;
+  background-color: var(--el-bgColor);
+  border: 1px solid #000;
 }
 
 .board__list {
-  margin: 0;
+  margin: 0 0 20px;
+  padding: 0;
 }
 
 .msg-list {
-  padding: 10px;
   list-style: none;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background-color: var(--el-bgColor);
-  border: 1px solid #000;
 }
 
 .msg-list__item {
@@ -104,14 +102,15 @@
   margin-bottom: 0;
 }
 
-.msg {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+.msg__title {
+  font-size: 1.5em;
+  font-weight: bold;
 }
 
-.msg__title {
+.msg-list__link {
+  cursor: pointer;
   font-weight: bold;
+  text-decoration: underline;
 }
 
 .btn {

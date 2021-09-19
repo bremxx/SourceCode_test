@@ -10,6 +10,8 @@ const Main = () => {
   const getMessages = useMemo(makeGetMessagesSelector, []);
   const messages = useSelector((state) => getMessages(state));
 
+  const visibleMessagesNum = useSelector((state) => state.visibleMessagesNum);
+
   const dispatch = useDispatch();
 
   const [isListVisible, setIsListVisible] = useState(false);
@@ -20,7 +22,7 @@ const Main = () => {
 
   useEffect(() => {
     // const id = setInterval(() => dispatch(postNewMessage(`New Message ${messages.length + 1}`)), 2000);
-    dispatch(sendMockMessage());
+    // dispatch(sendMockMessage());
 
     // return () => clearTimeout(sendMockMessage());
   }, [messages]);
@@ -43,7 +45,7 @@ const Main = () => {
             setIsListVisible={setIsListVisible}
             handleDeleteAll={handleDeleteAll} />
 
-          { (isListVisible && <MessagesList messages={messages} />) }
+          { (isListVisible && <MessagesList messages={messages} visibleMessagesNum={visibleMessagesNum} />) }
         </div>
       </div>
     </div>
