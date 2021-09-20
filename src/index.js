@@ -11,15 +11,13 @@ import {generateRandomString} from './utils';
 
 const store = configureStore({reducer});
 
-let counter = 0;
-
 const startSendingMocks = () => {
   setTimeout(
       function run() {
         store.dispatch(
             postNewMessage({
               id: nanoid(ID_LENGTH),
-              text: `${++counter} - ${generateRandomString()}`,
+              text: generateRandomString(),
               seen: false
             })
         );

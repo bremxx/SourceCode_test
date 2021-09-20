@@ -5,6 +5,12 @@ const getMessagesSelector = createSelector(
     (messages) => messages
 );
 
-const makeGetMessagesSelector = () => getMessagesSelector;
+const getUnseenMessagesNumSelector = createSelector(
+    (state) => state.unseenMessagesNum,
+    (unseenMessagesNum) => unseenMessagesNum
+);
 
-export {makeGetMessagesSelector};
+const makeGetMessagesSelector = () => getMessagesSelector;
+const makeGetUnseenMessagesNumSelector = () => getUnseenMessagesNumSelector;
+
+export {makeGetMessagesSelector, makeGetUnseenMessagesNumSelector};

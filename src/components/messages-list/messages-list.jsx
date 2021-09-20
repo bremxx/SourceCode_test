@@ -1,9 +1,13 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useMemo} from "react";
 import PropTypes from "prop-types";
 import {useDispatch, useSelector} from "react-redux";
 import {changeMessageSeenStatus} from "../../store/action";
+import {makeGetMessagesSelector} from "../../store/selectors";
 
-const MessagesList = ({messages, isFullListShown, setIsFullListShown}) => {
+const MessagesList = ({isFullListShown, setIsFullListShown}) => {
+
+  const getMessages = useMemo(makeGetMessagesSelector, []);
+  const messages = useSelector((state) => getMessages(state));
 
   const visibleMessagesNum = useSelector((state) => state.visibleMessagesNum);
 
@@ -50,7 +54,6 @@ const MessagesList = ({messages, isFullListShown, setIsFullListShown}) => {
 };
 
 MessagesList.propTypes = {
-  messages: PropTypes.array.isRequired,
   isFullListShown: PropTypes.bool.isRequired,
   setIsFullListShown: PropTypes.func.isRequired
 };

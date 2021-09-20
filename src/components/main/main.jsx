@@ -5,15 +5,15 @@ import {useDispatch, useSelector} from "react-redux";
 import {ID_LENGTH} from "../../const";
 import {debounce} from "../../utils";
 import {deleteAllMessages, postNewMessage} from "../../store/action";
-import {makeGetMessagesSelector} from "../../store/selectors";
+import {makeGetUnseenMessagesNumSelector} from "../../store/selectors";
 import Controls from "../controls/controls";
 import MessagesList from "../messages-list/messages-list";
 
 
 const Main = () => {
 
-  const getMessages = useMemo(makeGetMessagesSelector, []);
-  const messages = useSelector((state) => getMessages(state));
+  const getUnseenMessagesNum = useMemo(makeGetUnseenMessagesNumSelector, []);
+  const unseenMessagesNum = useSelector((state) => getUnseenMessagesNum(state));
 
   const dispatch = useDispatch();
 
@@ -58,7 +58,7 @@ const Main = () => {
           <div
             className="header__icon"
             onClick={() => handlePopupToggleClick()}>
-            { (messages.length > 0) && <div className="header__icon-indicator">{messages.length}</div> }
+            { (unseenMessagesNum > 0) && <div className="header__icon-indicator">{unseenMessagesNum}</div> }
           </div>
         </div>
 
@@ -72,7 +72,6 @@ const Main = () => {
           {
             isListVisible &&
             <MessagesList
-              messages={messages}
               isFullListShown={isFullListShown}
               setIsFullListShown={setIsFullListShown}
             />
