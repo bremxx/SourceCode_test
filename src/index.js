@@ -18,7 +18,8 @@ const store = configureStore({reducer});
             postNewMessage({
               id: nanoid(ID_LENGTH),
               text: generateRandomString(),
-              seen: false
+              seen: false,
+              createdAt: new Date().toISOString()
             })
         );
         setTimeout(run, TIMER_DELAY);

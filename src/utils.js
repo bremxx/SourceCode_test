@@ -1,3 +1,4 @@
+import dayjs from "dayjs";
 import {DEBOUNCE_DELAY} from "./const";
 
 const debounce = (cb) => {
@@ -12,7 +13,12 @@ const debounce = (cb) => {
 
 const generateRandomString = () => Math.random().toString(36).substr(2, 5);
 
+const humanizeDate = (format, date) => {
+  return dayjs(date).format(format);
+};
+
 export {
   debounce,
   generateRandomString,
+  humanizeDate
 };

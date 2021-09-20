@@ -25,7 +25,8 @@ const Main = () => {
         const newMessage = {
           id: nanoid(ID_LENGTH),
           text: newMessageText,
-          seen: isListVisible
+          seen: isListVisible,
+          createdAt: new Date().toISOString()
         };
         dispatch(postNewMessage(newMessage));
       },

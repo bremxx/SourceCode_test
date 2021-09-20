@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import {useDispatch, useSelector} from "react-redux";
 import {changeMessageSeenStatus} from "../../store/action";
 import {makeGetMessagesSelector} from "../../store/selectors";
+import {humanizeDate} from "../../utils";
 
 const MessagesList = ({isFullListShown, setIsFullListShown}) => {
 
@@ -37,7 +38,7 @@ const MessagesList = ({isFullListShown, setIsFullListShown}) => {
               (item, i) =>
                 <li className="msg-list__item msg" key={`msg-${i}`}>
                   <div className="msg__title">{item.text}</div>
-                  <div className="msg__time">sdgdgdf</div>
+                  <div className="msg__time">{humanizeDate(`D MMM, HH:mm:ss`, item.createdAt)}</div>
                 </li>
           )
         }
