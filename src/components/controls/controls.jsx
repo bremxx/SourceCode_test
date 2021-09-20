@@ -1,4 +1,4 @@
-import React, {useRef} from "react";
+import React, {memo, useRef} from "react";
 import PropTypes from "prop-types";
 import {useDispatch} from "react-redux";
 import {markAllMessagesSeen} from "../../store/action";
@@ -19,7 +19,13 @@ const Controls = ({handleSubmit, handleDeleteAll, handlePopupToggleClick}) => {
           handleSubmit(messageRef.current.value);
           messageRef.current.value = ``;
         }}>
-        <input className="input" ref={messageRef} defaultValue="" type="text" placeholder="Ведите название события"></input>
+        <input
+          className="input"
+          ref={messageRef}
+          defaultValue=""
+          type="text"
+          placeholder="Ведите название события"
+          required></input>
         <button className="btn btn-submit" type="submit">Отправить</button>
       </form>
 
@@ -50,4 +56,4 @@ Controls.propTypes = {
   handlePopupToggleClick: PropTypes.func.isRequired,
 };
 
-export default Controls;
+export default memo(Controls);

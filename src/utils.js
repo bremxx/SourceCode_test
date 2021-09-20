@@ -1,10 +1,12 @@
+import {DEBOUNCE_DELAY} from "./const";
+
 const debounce = (cb) => {
   let lastTimeout = null;
   return (...parameters) => {
     if (lastTimeout) {
       clearTimeout(lastTimeout);
     }
-    lastTimeout = setTimeout(() => cb(...parameters), 500);
+    lastTimeout = setTimeout(() => cb(...parameters), DEBOUNCE_DELAY);
   };
 };
 

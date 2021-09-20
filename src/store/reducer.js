@@ -1,17 +1,16 @@
 import {createReducer} from "@reduxjs/toolkit";
 import {DEFAULT_VISIBLE_MESSAGES_NUM} from "../const";
-import {changeMessageSeenStatus, deleteAllMessages, markAllMessagesSeen, postNewMessage} from "./action";
+import {
+  changeMessageSeenStatus,
+  deleteAllMessages,
+  markAllMessagesSeen,
+  postNewMessage
+} from "./action";
 
 const initialState = {
-  messages: [
-    {
-      id: 1,
-      text: `Initial message`,
-      seen: false
-    }
-  ],
+  messages: [],
   visibleMessagesNum: DEFAULT_VISIBLE_MESSAGES_NUM,
-  unseenMessagesNum: 1
+  unseenMessagesNum: 0
 };
 
 const reducer = createReducer(initialState, (builder) => {

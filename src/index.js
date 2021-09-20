@@ -11,7 +11,7 @@ import {generateRandomString} from './utils';
 
 const store = configureStore({reducer});
 
-const startSendingMocks = () => {
+(() => {
   setTimeout(
       function run() {
         store.dispatch(
@@ -23,9 +23,8 @@ const startSendingMocks = () => {
         );
         setTimeout(run, TIMER_DELAY);
       }, TIMER_DELAY);
-};
+})();
 
-// startSendingMocks();
 
 ReactDOM.render(
     <Provider store={store}>

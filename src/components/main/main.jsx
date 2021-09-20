@@ -32,16 +32,14 @@ const Main = () => {
       []
   );
 
-  const handleDeleteAll = useCallback(
-      () => {
-        dispatch(deleteAllMessages());
-        if (isListVisible) {
-          setIsListVisible(!isListVisible);
-          setIsFullListShown(false);
-        }
-      }, []
-  );
-  const debouncedHandleDeleteAll = debounce(() => handleDeleteAll());
+  const handleDeleteAll = () => {
+    dispatch(deleteAllMessages());
+    if (isListVisible) {
+      setIsListVisible(!isListVisible);
+      setIsFullListShown(false);
+    }
+  };
+  const debouncedHandleDeleteAll = useCallback(debounce(() => handleDeleteAll()), []);
 
   const handlePopupToggleClick = useCallback(
       () => {

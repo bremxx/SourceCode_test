@@ -7,11 +7,13 @@ const ActionType = {
   ALL_MSGS_ARE_SEEN: `main/allMessagesHaveBeenSeen`,
 };
 
-const postNewMessage = createAction(ActionType.POST_MSG, (message) => ({payload: message}));
+const postNewMessage =
+  createAction(ActionType.POST_MSG, (message) => ({payload: message}));
 
 const deleteAllMessages = createAction(ActionType.DELETE_ALL_MSGS);
 
-const changeMessageSeenStatus = createAction(ActionType.MSG_IS_SEEN, (id, status) => ({payload: {id, status}}));
+const changeMessageSeenStatus =
+  createAction(ActionType.MSG_IS_SEEN, (id, status) => ({payload: {id, status}}));
 
 const markAllMessagesSeen = createAction(ActionType.ALL_MSGS_ARE_SEEN);
 
