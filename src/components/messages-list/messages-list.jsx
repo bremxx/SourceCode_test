@@ -1,7 +1,11 @@
-import React from "react";
+import React, {useEffect} from "react";
 import PropTypes from "prop-types";
+import {useDispatch, useSelector} from "react-redux";
+import {changeMessageSeenStatus} from "../../store/action";
 
-const MessagesList = ({messages, visibleMessagesNum, isFullListShown, setIsFullListShown}) => {
+const MessagesList = ({messages, isFullListShown, setIsFullListShown}) => {
+
+  const visibleMessagesNum = useSelector((state) => state.visibleMessagesNum);
 
   const getVisibleMessages = () => (
     isFullListShown
@@ -11,6 +15,16 @@ const MessagesList = ({messages, visibleMessagesNum, isFullListShown, setIsFullL
 
   const messagesToShow = getVisibleMessages();
 
+  const dispatch = useDispatch();
+
+  useEffect(() =>
+    messagesToShow.forEach((item) => {
+      if (!item.seen) {
+        dispatch(changeMessageSeenStatus(item.id, true));
+      }
+    }), [isFullListShown, messages]
+  );
+
   return (
     <div className="board__list-container ">
       <ul className="board__list msg-list">
@@ -18,7 +32,7 @@ const MessagesList = ({messages, visibleMessagesNum, isFullListShown, setIsFullL
           messagesToShow.map(
               (item, i) =>
                 <li className="msg-list__item msg" key={`msg-${i}`}>
-                  <div className="msg__title">{item}</div>
+                  <div className="msg__title">{item.text}</div>
                   <div className="msg__time">sdgdgdf</div>
                 </li>
           )
@@ -37,7 +51,6 @@ const MessagesList = ({messages, visibleMessagesNum, isFullListShown, setIsFullL
 
 MessagesList.propTypes = {
   messages: PropTypes.array.isRequired,
-  visibleMessagesNum: PropTypes.number.isRequired,
   isFullListShown: PropTypes.bool.isRequired,
   setIsFullListShown: PropTypes.func.isRequired
 };

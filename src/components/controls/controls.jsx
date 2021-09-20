@@ -1,9 +1,14 @@
-import React, {memo, useRef} from "react";
+import React, {useRef} from "react";
 import PropTypes from "prop-types";
+import {useDispatch} from "react-redux";
+import {markAllMessagesSeen} from "../../store/action";
 
 const Controls = ({handleSubmit, handleDeleteAll, handlePopupToggleClick}) => {
 
   const messageRef = useRef();
+  const dispatch = useDispatch();
+
+  const handleReadAllClick = () => dispatch(markAllMessagesSeen());
 
   return (
     <div className="board__controls controls">
@@ -18,18 +23,22 @@ const Controls = ({handleSubmit, handleDeleteAll, handlePopupToggleClick}) => {
         <button className="btn btn-submit" type="submit">Отправить</button>
       </form>
 
-      <button className="controls__item btn btn-read-all" type="button">Пометить все события прочитанными</button>
+      <button
+        className="controls__item btn btn-read-all"
+        type="button"
+        onClick={() => handleReadAllClick()}
+      >Пометить все события прочитанными</button>
+
       <button
         className="controls__item btn btn-delete-all"
         type="button"
         onClick={() => handleDeleteAll()}
       >Удалить все события</button>
+
       <button
         className="controls__item btn btn-show-popup"
         type="button"
-        onClick={() => {
-          handlePopupToggleClick();
-        }}
+        onClick={() => handlePopupToggleClick()}
       >Скрыть/показать попап нотификаций</button>
     </div>
   );
@@ -41,4 +50,4 @@ Controls.propTypes = {
   handlePopupToggleClick: PropTypes.func.isRequired,
 };
 
-export default memo(Controls);
+export default Controls;
