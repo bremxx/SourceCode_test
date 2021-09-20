@@ -7,10 +7,10 @@ import reducer from './store/reducer';
 import {postNewMessage} from './store/action';
 import {nanoid} from 'nanoid';
 import {ID_LENGTH, TIMER_DELAY} from './const';
+import {generateRandomString} from './utils';
 
 const store = configureStore({reducer});
 
-const generateRandomString = () => Math.random().toString(36).substr(2, 5);
 let counter = 0;
 
 const startSendingMocks = () => {

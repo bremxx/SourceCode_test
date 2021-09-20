@@ -3,20 +3,11 @@ import React, {useCallback, useMemo, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 
 import {ID_LENGTH} from "../../const";
+import {debounce} from "../../utils";
 import {deleteAllMessages, postNewMessage} from "../../store/action";
 import {makeGetMessagesSelector} from "../../store/selectors";
 import Controls from "../controls/controls";
 import MessagesList from "../messages-list/messages-list";
-
-const debounce = (cb) => {
-  let lastTimeout = null;
-  return (...parameters) => {
-    if (lastTimeout) {
-      clearTimeout(lastTimeout);
-    }
-    lastTimeout = setTimeout(() => cb(...parameters), 500);
-  };
-};
 
 
 const Main = () => {
