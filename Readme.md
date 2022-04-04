@@ -17,7 +17,8 @@
 
 - установить зависимости
 - 'npm run build' создает продакшн версию проекта
-- 'npm run start' запускает web сервер в режиме разработки
+- 'npm run start-dev' запускает web сервер в development режиме 
+- 'npm run start' запускает web сервер в production режиме 
 
 &nbsp;
 
