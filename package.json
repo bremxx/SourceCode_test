@@ -3,8 +3,9 @@
   "version": "1.0.0",
   "main": "./src/index.js",
   "scripts": {
-    "start": "webpack-dev-server --mode development",
-    "build": "webpack --mode production"
+    "start-dev": "cross-env NODE_ENV=development webpack-dev-server --mode development",
+    "start": "cross-env NODE_ENV=production webpack-dev-server --mode production",
+    "build": "cross-env NODE_ENV=production webpack --mode production"
   },
   "repository": {
     "type": "git",
