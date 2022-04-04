@@ -10,7 +10,4 @@ const getUnseenMessagesNumSelector = createSelector(
     (unseenMessagesNum) => unseenMessagesNum
 );
 
-const makeGetMessagesSelector = () => getMessagesSelector;
-const makeGetUnseenMessagesNumSelector = () => getUnseenMessagesNumSelector;
-
-export {makeGetMessagesSelector, makeGetUnseenMessagesNumSelector};
+export {getMessagesSelector, getUnseenMessagesNumSelector};
